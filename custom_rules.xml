@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="imported">
+	<condition property="deps.target" value="release" else="debug">
+		<isset property="build.is.mode.release" />
+	</condition>
 
     <!-- ANDROID_HOME environment variable must be defined -->
 
-    <target name="anode">
+    <target name="clone-anode">
         <available file="libs/anode" type="dir" property="anode.got"/>
         <if>
             <condition><isset property="anode.got"/></condition>
@@ -20,6 +23,14 @@
             </else>
         </if>
     </target>
+
+    <target name="build-anode">
+		<subant failonerror="true">
+			<fileset dir="libs/anode/libnode" includes="build.xml" />
+			<target name="${deps.target}" />
+		</subant>
+    </target>
+    <target name="anode" depends="clone-anode,build-anode" />
 
     <target name="webinos-deps">
         <!-- npm install -->
