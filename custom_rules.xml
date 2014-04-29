@@ -6,6 +6,10 @@
 
     <!-- ANDROID_HOME environment variable must be defined -->
 
+    <target name="clean-anode">
+        <delete dir="libs/anode"/>
+    </target>
+
     <target name="clone-anode">
         <available file="libs/anode" type="dir" property="anode.got"/>
         <if>
